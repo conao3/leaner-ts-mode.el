@@ -1,8 +1,9 @@
-;;; leaner-ts-mode.el --- Lean 4 major mode built on built-in facilities  -*- lexical-binding: t; -*-
+;;; leaner-ts-mode.el --- Lean 4 major mode using tree-sitter  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026  Naoya Yamashita
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
+;; Assisted-by: Claude:claude-opus-5-5
 ;; Version: 0.0.1
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "30.1"))
@@ -23,13 +24,20 @@
 
 ;;; Commentary:
 
-;; Lean 4 major mode built on built-in facilities.
+;; A major mode for the Lean 4 theorem prover and programming language,
+;; built on the facilities Emacs already provides: tree-sitter for
+;; syntax, `completing-read' and `completion-at-point' for completion,
+;; Flymake for diagnostics, ElDoc for hover, xref for definitions, and
+;; project.el for the project root.
+;;
+;; The package is under construction and does not define the major
+;; mode yet.
 
 
 ;;; Code:
 
 (defgroup leaner-ts nil
-  "Lean 4 major mode built on built-in facilities."
+  "Lean 4 major mode using tree-sitter."
   :prefix "leaner-ts-"
   :group 'languages
   :link '(url-link :tag "Github" "https://github.com/conao3/leaner-ts-mode.el"))

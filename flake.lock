@@ -43,11 +43,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1794218109,
-        "narHash": "sha256-AELneIvRWOqEeglE4k9lDeZ8RzHQ2Vu+WKjlq+WvRfA=",
+        "lastModified": 1794477402,
+        "narHash": "sha256-IPFgf6YC7xmfHxZLuYGghz0ZSics6t4M0y4C2BNii1Y=",
         "owner": "conao3",
         "repo": "keg.el",
-        "rev": "e368990f026e66150e413aa621a3ca1bda152561",
+        "rev": "d5962451b6b8e35fbc05631006776b962d64017f",
         "type": "github"
       },
       "original": {

@@ -3,6 +3,7 @@
 ;; Copyright (C) 2026  Naoya Yamashita
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
+;; Assisted-by: Claude:claude-opus-5-5
 ;; URL: https://github.com/conao3/leaner-ts-mode.el
 
 ;; This program is free software: you can redistribute it and/or modify
@@ -30,7 +31,5 @@
 
 (cort-deftest leaner-ts-mode/feature
   '((:eq (featurep 'leaner-ts-mode) t)))
-
-(provide 'leaner-ts-mode-tests)
 
 ;;; leaner-ts-mode-tests.el ends here

@@ -1,5 +1,5 @@
 {
-  description = "Lean 4 major mode built on built-in facilities";
+  description = "Lean 4 major mode using tree-sitter";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -27,7 +27,7 @@
             version = "0.0.1";
             src = pkgs.lib.cleanSourceWith {
               src = ./.;
-              filter = path: _: !(pkgs.lib.hasSuffix "-tests.el" path);
+              filter = path: _: baseNameOf path != "test";
             };
           };
           emacsWithPackage = emacs.pkgs.withPackages (_: [ pkg ]);

@@ -6,7 +6,7 @@
 [[https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml][https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml/badge.svg]]
 
 * Description
-Lean 4 major mode built on built-in facilities.
+Lean 4 major mode using tree-sitter.
 
 * Install
 #+begin_src emacs-lisp

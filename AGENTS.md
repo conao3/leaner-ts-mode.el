@@ -1,11 +1,11 @@
 # AGENTS.md
 
-`leaner-ts-mode.el` is an Emacs Lisp package: Lean 4 major mode built on built-in facilities.
+`leaner-ts-mode.el` is an Emacs Lisp package: Lean 4 major mode using tree-sitter.
 
 ## Layout
 
 - `leaner-ts-mode.el`: the package.
-- `leaner-ts-mode-tests.el`: tests written with cort.
+- `test/leaner-ts-mode-tests.el`: tests written with cort. The test file does not provide a feature, as MELPA requires.
 - `Keg`: package recipe and development dependencies for keg.
 - `Makefile`: the build, lint, test, and check targets.
 - `flake.nix`: the development shell (Emacs, GNU Make, keg), `nix run` (Emacs with the package loaded), and `nix fmt`.

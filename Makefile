@@ -29,7 +29,7 @@ lint:
 
 .PHONY: test
 test: build
-	keg exec $(EMACS) --batch -l $(PACKAGE_NAME)-tests.el -f cort-test-run
+	keg exec $(EMACS) --batch -L . -l test/$(PACKAGE_NAME)-tests.el -f cort-test-run
 
 .PHONY: check
 check: lint test
