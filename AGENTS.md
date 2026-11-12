@@ -1,0 +1,28 @@
+# AGENTS.md
+
+`leaner-ts-mode.el` is an Emacs Lisp package: Lean 4 major mode built on built-in facilities.
+
+## Layout
+
+- `leaner-ts-mode.el`: the package.
+- `leaner-ts-mode-tests.el`: tests written with cort.
+- `Keg`: package recipe and development dependencies for keg.
+- `Makefile`: the build, lint, test, and check targets.
+- `flake.nix`: the development shell (Emacs, GNU Make, keg), `nix run` (Emacs with the package loaded), and `nix fmt`.
+- `.github/workflows/ci.yml`: runs `make check` on every Emacs version in the matrix.
+
+## Verification
+
+Run the checks inside the development shell:
+
+```sh
+nix develop --command make check
+```
+
+`make check` runs `keg lint` and the cort tests. CI runs the same target.
+
+## Conventions
+
+- Prefix every symbol with `leaner-ts-` (the package name without `-mode`, as in `clojure-ts-mode`). Name each additional file `leaner-ts-<part>.el`.
+- Keep the lower bound of `Package-Requires` in the CI matrix.
+- When a workflow or a `uses:` line changes, run `gh actions-lock` and commit `.github/workflows/actions.lock` together with the workflow.

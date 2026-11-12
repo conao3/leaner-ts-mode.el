@@ -1,0 +1,9 @@
+;; Keg
+
+(source gnu melpa)
+
+(package
+ (leaner-ts-mode
+  (recipe . (leaner-ts-mode :fetcher github :repo "conao3/leaner-ts-mode.el"))))
+
+(dev-dependency cort)

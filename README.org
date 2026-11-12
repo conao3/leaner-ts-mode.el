@@ -1,0 +1,38 @@
+#+title: leaner-ts-mode.el
+#+author: conao3
+
+[[https://github.com/conao3/leaner-ts-mode.el/blob/master/LICENSE][https://img.shields.io/github/license/conao3/leaner-ts-mode.el.svg?style=flat-square]]
+[[https://github.com/conao3/leaner-ts-mode.el/releases][https://img.shields.io/github/tag/conao3/leaner-ts-mode.el.svg?style=flat-square]]
+[[https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml][https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml/badge.svg]]
+
+* Description
+Lean 4 major mode built on built-in facilities.
+
+* Install
+#+begin_src emacs-lisp
+  (leaf leaner-ts-mode :ensure t)
+#+end_src
+
+* Usage
+
+* Customize
+
+* Contribution
+Development uses [[https://nixos.org][Nix]] and [[https://github.com/conao3/keg.el][keg]].
+
+#+begin_src shell
+  nix develop                       # Enter the development shell
+  make check                        # Run lint and test
+  nix run                           # Start Emacs with leaner-ts-mode loaded
+  nix fmt                           # Format the Nix files
+#+end_src
+
+* License
+#+begin_example
+  General Public License Version 3 (GPLv3)
+  Copyright (c) Naoya Yamashita - https://conao3.com
+  https://github.com/conao3/leaner-ts-mode.el/blob/master/LICENSE
+#+end_example
+
+* Author
+- Naoya Yamashita ([[https://github.com/conao3][conao3]])

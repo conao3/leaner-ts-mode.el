@@ -1,0 +1,7 @@
+## .gitignore
+
+*-autoloads.el
+*.elc
+/.keg
+/result
+/result-*
