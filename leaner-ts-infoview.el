@@ -238,7 +238,7 @@
       (leaner-ts--rpc-connect connection uri #'request (lambda (error) (failed nil error))))))
 
 (defun leaner-ts--info-refresh (&optional force)
-  "Refresh this infoview when its source changes, or unconditionally with FORCE."
+  "Refresh this infoview from its source, or unconditionally with FORCE."
   (unless (and leaner-ts-infoview-freeze-mode (not force))
     (let ((selected (window-buffer (selected-window))))
       (when (and (not leaner-ts--info-pinned)
