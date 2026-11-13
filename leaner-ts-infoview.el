@@ -307,6 +307,7 @@
               imenu-create-index-function #'leaner-ts--info-index
               revert-buffer-function #'leaner-ts--info-revert)
   (outline-minor-mode 1)
+  (visual-line-mode 1)
   (add-hook 'eldoc-documentation-functions #'leaner-ts--info-eldoc nil t)
   (eldoc-mode 1)
   (add-hook 'kill-buffer-hook #'leaner-ts--info-cleanup nil t))
