@@ -11,8 +11,11 @@
 ;;; Code:
 
 (require 'package)
-(require 'eglot)
-(unless (fboundp 'eglot-semantic-tokens-mode)
+(setq package-user-dir (or (getenv "KEGLINTPACKAGEUSERDIR")
+                           (error "Run this setup through keg exec"))
+      package-gnupghome-dir (expand-file-name "gnupg" package-user-dir))
+(package-initialize)
+(unless (package-installed-p 'eglot '(1 20))
   (package-refresh-contents)
   (package-install (car (alist-get 'eglot package-archive-contents))))
 
