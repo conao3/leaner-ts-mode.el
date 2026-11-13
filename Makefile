@@ -29,10 +29,15 @@ lint:
 
 .PHONY: test
 test: build
-	keg exec $(EMACS) --batch -L . -l test/$(PACKAGE_NAME)-tests.el -f cort-test-run
+	keg exec $(EMACS) --batch -L . -l test/$(PACKAGE_NAME)-tests.el -l test/leaner-ts-features-tests.el -f cort-test-run
+
+.PHONY: integration
+integration: build
+	keg exec $(EMACS) --batch -L . -l test/$(PACKAGE_NAME)-tests.el -l test/leaner-ts-integration-tests.el -f cort-test-run
 
 .PHONY: check
-check: lint test
+.NOTPARALLEL: check
+check: clean lint test integration
 
 .PHONY: clean
 clean:

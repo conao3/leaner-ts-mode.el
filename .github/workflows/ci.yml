@@ -37,5 +37,22 @@ jobs:
       - name: Install the pinned Lean grammar
         run: emacs -Q --batch -L . -l leaner-ts-mode.el -f leaner-ts-install-grammar
 
+      - uses: leanprover/lean-action@v1.7.1
+        with:
+          lake-package-directory: test/fixtures/lsp
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+          use-github-cache: 'false'
+
+      - name: Select the test toolchain
+        run: elan default "$(cat test/fixtures/lsp/lean-toolchain)"
+
+      - name: Ensure Eglot 1.20 or newer for integration tests
+        run: |
+          keg exec emacs --batch --eval "(progn (require 'package) (require 'eglot) (unless (fboundp 'eglot-semantic-tokens-mode) (package-refresh-contents) (package-install (car (alist-get 'eglot package-archive-contents)))))"
+
       - name: Run checks
         run: make check

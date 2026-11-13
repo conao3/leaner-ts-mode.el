@@ -1,0 +1,4 @@
+(leaner-ts-mode
+ :fetcher github
+ :repo "conao3/leaner-ts-mode.el"
+ :files (:defaults "COPYING.unicode" "NOTICE"))

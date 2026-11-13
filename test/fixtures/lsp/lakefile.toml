@@ -1,0 +1,6 @@
+name = "leaner_ts_fixture"
+version = "0.0.0"
+defaultTargets = ["Fixture"]
+
+[[lean_lib]]
+name = "Fixture"

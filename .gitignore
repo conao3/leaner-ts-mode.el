@@ -3,5 +3,6 @@
 *-autoloads.el
 *.elc
 /.keg
+/test/fixtures/lsp/.lake/
 /result
 /result-*

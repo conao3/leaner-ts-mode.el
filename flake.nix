@@ -45,7 +45,7 @@
           };
           pkg = emacs.pkgs.trivialBuild {
             pname = "leaner-ts-mode";
-            version = "0.1.0";
+            version = "0.2.0";
             src = pkgs.lib.cleanSourceWith {
               src = ./.;
               filter = path: _: baseNameOf path != "test";
@@ -56,6 +56,11 @@
         {
           packages.default = pkgs.writeShellApplication {
             name = "leaner-ts-mode";
+            runtimeInputs = [
+              pkgs.lean4
+              pkgs.stdenv.cc
+              pkgs.gnumake
+            ];
             text = ''exec ${emacsWithPackage}/bin/emacs -Q --eval "(add-to-list 'treesit-extra-load-path \"${grammar}/lib\")" --eval "(require 'leaner-ts-mode)" "$@"'';
           };
 
@@ -65,6 +70,7 @@
             packages = [
               emacs
               pkgs.gnumake
+              pkgs.lean4
               inputs.keg.packages.${system}.default
             ];
             shellHook = ''

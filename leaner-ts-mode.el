@@ -4,7 +4,7 @@
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
 ;; Assisted-by: Claude:claude-opus-5-5, Codex:gpt-6.1-sol
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "30.1"))
 ;; URL: https://github.com/conao3/leaner-ts-mode.el
@@ -42,6 +42,13 @@
 (require 'compile)
 (require 'imenu)
 (require 'outline)
+(require 'leaner-ts-input)
+
+(autoload 'leaner-ts-eglot-ensure "leaner-ts-eglot" nil t)
+(autoload 'leaner-ts-infoview "leaner-ts-infoview" nil t)
+(autoload 'leaner-ts-search "leaner-ts-search" nil t)
+(autoload 'leaner-ts-find-module "leaner-ts-search" nil t)
+(autoload 'leaner-ts-module-completion-at-point "leaner-ts-search")
 
 (defgroup leaner-ts nil
   "Lean 4 major mode using tree-sitter."
@@ -81,7 +88,12 @@
 
 (defvar-keymap leaner-ts-mode-map
   :doc "Keymap for `leaner-ts-mode'."
-  "C-c C-c" #'compile)
+  "C-c C-c" #'compile
+  "C-c C-e" #'leaner-ts-eglot-ensure
+  "C-c C-g" #'leaner-ts-infoview
+  "C-c C-i" #'leaner-ts-insert-symbol
+  "C-c C-s" #'leaner-ts-search
+  "C-c C-m" #'leaner-ts-find-module)
 
 (defconst leaner-ts--declaration-keywords
   '("def" "theorem" "lemma" "abbrev" "opaque" "axiom" "instance"
@@ -444,6 +456,8 @@ Indentation follows lexical layout and preserves explicit proof indentation."
               indent-tabs-mode nil
               leaner-ts--cache nil)
   (add-hook 'project-find-functions #'leaner-ts--project-find nil t)
+  (add-hook 'completion-at-point-functions #'leaner-ts-module-completion-at-point nil t)
+  (add-hook 'completion-at-point-functions #'leaner-ts-symbol-completion-at-point nil t)
   (let ((root (leaner-ts--project-find default-directory)))
     (setq-local compile-command
                 (if root (concat "lake -d " (shell-quote-argument (project-root root)) " build")

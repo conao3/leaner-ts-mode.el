@@ -1,0 +1,6 @@
+The Unicode abbreviation data in leaner-ts-symbols.el is adapted from
+leanprover/vscode-lean4, lean4-unicode-input/src/abbreviations.json,
+commit 363e8cc9c0993fc036044bb475d69e1a2ed2465a.
+Source: https://github.com/leanprover/vscode-lean4/blob/363e8cc9c0993fc036044bb475d69e1a2ed2465a/lean4-unicode-input/src/abbreviations.json
+The data was converted from JSON to Emacs Lisp. The upstream license
+is Apache-2.0, reproduced in COPYING.unicode.

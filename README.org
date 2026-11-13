@@ -14,14 +14,22 @@ Lean 4 editing with [[https://github.com/lua-vr/tree-sitter-lean-flat][tree-sitt
 - =beginning-of-defun= / =end-of-defun=, qualified names in Imenu,
   =which-function-mode=, and =outline-minor-mode=.
 - Nested Lake project discovery through project.el and =C-c C-c= to build.
+- Official Lean Unicode abbreviations through Quail, completion at point,
+  and an annotated symbol picker, including cursor positions in templates.
+- Eglot integration for completion, ElDoc, xref, Flymake, code actions,
+  rename, semantic tokens, inlay-hint refresh, and processing progress.
+- A native interactive goals view with hypotheses, expected types, messages,
+  term inspection, definition buttons, lazy traces, freezing, and pinned views.
+- Loogle search and module completion with completion categories and grouping.
 
 Requires Emacs 30.1 or newer with tree-sitter support. Syntax editing works
 without a Lean process. Declaration boundaries and indentation use lexical
 layout; explicit proof indentation is preserved. User-defined commands and
 notation can require manual indentation.
 
-Language-server integration, symbol input, and the goals view are separate
-development stages; this version provides the editing mode.
+Server features require Lean/Lake and Eglot 1.20 or newer. On Emacs 30,
+install a current Eglot from GNU ELPA. The editing mode and symbol input can
+be used independently of Eglot; starting a server is an explicit command.
 
 * Install
 #+begin_src emacs-lisp
@@ -53,14 +61,72 @@ The Nix launcher supplies the tested grammar directly:
 | =M-x imenu= | Jump to a qualified declaration name |
 | =M-x outline-minor-mode= | Fold declaration and namespace headings |
 | =C-c C-c= | Run =lake build= in the nearest Lake project |
+| =C-c C-e= | Start or join the project's Lean server |
+| =C-c C-g= | Display goals, expected type, and messages |
+| =C-c C-i= | Pick a Unicode symbol by abbreviation |
+| =C-c C-s= | Search Loogle and insert a declaration name |
+| =C-c C-m= | Find a module's source |
 
 Try the small projects in [[https://github.com/conao3/lean-getting-started][lean-getting-started]] while exercising these commands.
 Each practice directory is detected as its own Lake project.
+
+** Writing proofs
+
+Start the server with =C-c C-e=, then open the infoview with =C-c C-g=.
+Moving through a proof updates its goals after an idle delay. In the
+infoview, move point onto a term to see its type and documentation through
+ElDoc; =RET= or =M-.= visits its definition when Lean provides a location.
+=TAB= moves between buttons. =Expand trace= fetches lazy trace children.
+
+In the infoview, =g= refreshes, =f= freezes or resumes automatic updates, and
+=p= creates a separate view pinned to that source location. Standard Outline
+commands fold goals, hypotheses, and messages; Imenu navigates their headings.
+Closing a view releases its remote references and timers.
+
+Eglot supplies =M-.= in source buffers, =M-x eglot-rename=,
+=M-x eglot-code-actions=, and Flymake diagnostics. Use
+=M-x eglot-semantic-tokens-mode= and =M-x eglot-inlay-hints-mode= for those
+Eglot features. The mode handles Lean's inlay-hint refresh requests and keeps
+lexical highlighting for =sorry= and =admit=.
+
+To start Eglot automatically, add the following to your configuration:
+
+#+begin_src emacs-lisp
+  (add-hook 'leaner-ts-mode-hook #'leaner-ts-eglot-ensure)
+#+end_src
+
+When using an existing Emacs daemon, make Lake available in that daemon's
+=exec-path= and =PATH=. The Nix launcher supplies Lean, Lake, and a C compiler.
+On Emacs versions using =trusted-content=, configure your own Lean project as
+a trusted directory to enable automatic Flymake checks.
+
+** Symbols and modules
+
+Type =\alpha= then complete at point (=C-M-i=) to insert =α=. Alternatively,
+use =M-x set-input-method RET Leaner= and type the same abbreviation; =C-\=
+then toggles the method. Templates such as =\<>= insert paired delimiters
+and position the cursor inside them. =C-c C-i= offers the same table with
+the Unicode character and name in its annotations.
+
+Module completion is active after =import=. =C-c C-m= opens a module's source;
+use a prefix argument to rebuild the module index after adding files or
+dependencies. The index combines the project's source files and Lake's
+=LEAN_PATH=. Source lookup follows standard Lake and Lean toolchain layouts.
+
+=C-c C-s= asks Loogle asynchronously. Select a result grouped by module and
+annotated with its type to insert its name. The search service covers its
+own library snapshot; Lean checks the inserted name in your local project.
 
 * Customize
 
 =leaner-ts-indent-offset= controls the indentation width (default: 2).
 =treesit-font-lock-level= selects the amount of syntax highlighting.
+=leaner-ts-infoview-delay= controls the idle update delay (default: 0.3 seconds).
+=leaner-ts-loogle-url= selects the Loogle JSON endpoint.
+
+Use =display-buffer-alist= to control where the infoview appears. For a
+one-line goal in source-buffer ElDoc, add =leaner-ts-eldoc-goal= to that
+buffer's =eldoc-documentation-functions= after loading =leaner-ts-infoview=.
 
 * Contribution
 Development uses [[https://nixos.org][Nix]] and [[https://github.com/conao3/keg.el][keg]].
@@ -68,6 +134,7 @@ Development uses [[https://nixos.org][Nix]] and [[https://github.com/conao3/keg.
 #+begin_src shell
   nix develop                       # Enter the development shell
   make check                        # Run lint and test
+  make integration                  # Test against a real Lean server
   nix run                           # Start Emacs with leaner-ts-mode loaded
   nix fmt                           # Format the Nix files
 #+end_src
@@ -77,6 +144,10 @@ The development shell builds the pinned grammar and exports
 install the grammar with =leaner-ts-install-grammar= before running =make check=.
 Tests require a working grammar and exercise actual parsing, fontification,
 indentation, navigation, comments, project discovery, and typing a newline.
+The integration test starts =lake serve= for =test/fixtures/lsp= and checks
+real goal states, partial-term types, definition lookup, freeze/pin behavior,
+module discovery, diagnostics, RPC reference release, and lazy trace expansion.
+The CI matrix runs the same checks with Lean 4.35.0 and Eglot 1.20 or newer.
 
 Indentation scenarios include the cases exercised by
 [[https://github.com/Julian/lean.nvim/blob/main/spec/indent_spec.lua][lean.nvim's indent tests]]:
@@ -85,6 +156,10 @@ dedents. Lean's extensible syntax motivates the flat grammar; the grammar's
 own README describes the tradeoff.
 
 * License
+The abbreviation data is adapted from the official vscode-lean4 extension,
+commit =363e8cc9c0993fc036044bb475d69e1a2ed2465a=. Its Apache-2.0 license is
+included in =COPYING.unicode=; attribution is in =NOTICE=.
+
 #+begin_example
   General Public License Version 3 (GPLv3)
   Copyright (c) Naoya Yamashita - https://conao3.com
