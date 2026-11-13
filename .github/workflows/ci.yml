@@ -23,6 +23,7 @@ jobs:
         include:
           - emacs_version: 'snapshot'
             allow_failure: true
+    continue-on-error: ${{ matrix.allow_failure == true }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: purcell/setup-emacs@v8.0
@@ -33,10 +34,8 @@ jobs:
           git clone --depth 1 https://github.com/conao3/keg.el.git "$HOME/.keg"
           echo "$HOME/.keg/bin" >> "$GITHUB_PATH"
 
-      - name: Run checks
-        if: matrix.allow_failure != true
-        run: make check
+      - name: Install the pinned Lean grammar
+        run: emacs -Q --batch -L . -l leaner-ts-mode.el -f leaner-ts-install-grammar
 
-      - name: Run checks (allow failure)
-        if: matrix.allow_failure == true
-        run: make check || true
+      - name: Run checks
+        run: make check

@@ -21,6 +21,12 @@ nix develop --command make check
 
 `make check` runs `keg lint` and the cort tests. CI runs the same target.
 
+The tests use a real tree-sitter-lean-flat grammar. The development shell
+builds it and exports `LEANER_TS_GRAMMAR_DIR`; CI installs it with
+`leaner-ts-install-grammar`. Test mode activation and editing behavior with
+the parser enabled. The grammar is loaded as `leanflat`, with the library
+name `libtree-sitter-leanflat` and the C entry point `tree_sitter_lean`.
+
 ## Conventions
 
 - Prefix every symbol with `leaner-ts-` (the package name without `-mode`, as in `clojure-ts-mode`). Name each additional file `leaner-ts-<part>.el`.

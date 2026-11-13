@@ -56,6 +56,23 @@
         "type": "github"
       }
     },
+    "lean-grammar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790415275,
+        "narHash": "sha256-zQq8cfIrkIpFIU4Agb9GWelRJ1bma7wBgUdvMSYFLmI=",
+        "owner": "lua-vr",
+        "repo": "tree-sitter-lean-flat",
+        "rev": "d3c99bdcfad217d289bc513c51e6f825fcf9484f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lua-vr",
+        "repo": "tree-sitter-lean-flat",
+        "rev": "d3c99bdcfad217d289bc513c51e6f825fcf9484f",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1793977579,
@@ -154,6 +171,7 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "keg": "keg",
+        "lean-grammar": "lean-grammar",
         "nixpkgs": "nixpkgs_3",
         "treefmt-nix": "treefmt-nix_2"
       }

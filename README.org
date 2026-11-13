@@ -6,16 +6,61 @@
 [[https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml][https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml/badge.svg]]
 
 * Description
-Lean 4 major mode using tree-sitter.
+Lean 4 editing with [[https://github.com/lua-vr/tree-sitter-lean-flat][tree-sitter-lean-flat]] and Emacs facilities.
+
+- Font-lock for comments, documentation, keywords, literals, declaration names,
+  attributes, and =sorry=/=admit=.
+- Indentation for =by=, =do=, =where=, match branches, focus dots, and delimiters.
+- =beginning-of-defun= / =end-of-defun=, qualified names in Imenu,
+  =which-function-mode=, and =outline-minor-mode=.
+- Nested Lake project discovery through project.el and =C-c C-c= to build.
+
+Requires Emacs 30.1 or newer with tree-sitter support. Syntax editing works
+without a Lean process. Declaration boundaries and indentation use lexical
+layout; explicit proof indentation is preserved. User-defined commands and
+notation can require manual indentation.
+
+Language-server integration, symbol input, and the goals view are separate
+development stages; this version provides the editing mode.
 
 * Install
 #+begin_src emacs-lisp
-  (leaf leaner-ts-mode :ensure t)
+  (add-to-list 'load-path "/path/to/leaner-ts-mode.el")
+  (require 'leaner-ts-mode)
+#+end_src
+
+Run =M-x leaner-ts-install-grammar= once, then open a =.lean= file. The command
+fetches the tested grammar commit =d3c99bdcfad217d289bc513c51e6f825fcf9484f=
+and compiles it with Emacs' grammar builder. Git and a C compiler must be
+available to Emacs. The grammar is loaded as =leanflat= with its own library
+name, so it can coexist with a different grammar registered as =lean=.
+
+The mode validates the grammar's token schema before enabling editing features.
+
+The Nix launcher supplies the tested grammar directly:
+
+#+begin_src shell
+  nix run . -- /path/to/lean-getting-started/src/01-basics/Basics.lean
 #+end_src
 
 * Usage
 
+| Command | Behavior |
+|---------+----------|
+| =TAB= / =C-M-\= | Indent a line / region |
+| =M-;= | Comment or uncomment |
+| =C-M-a= / =C-M-e= | Move to a declaration's beginning / end |
+| =M-x imenu= | Jump to a qualified declaration name |
+| =M-x outline-minor-mode= | Fold declaration and namespace headings |
+| =C-c C-c= | Run =lake build= in the nearest Lake project |
+
+Try the small projects in [[https://github.com/conao3/lean-getting-started][lean-getting-started]] while exercising these commands.
+Each practice directory is detected as its own Lake project.
+
 * Customize
+
+=leaner-ts-indent-offset= controls the indentation width (default: 2).
+=treesit-font-lock-level= selects the amount of syntax highlighting.
 
 * Contribution
 Development uses [[https://nixos.org][Nix]] and [[https://github.com/conao3/keg.el][keg]].
@@ -26,6 +71,18 @@ Development uses [[https://nixos.org][Nix]] and [[https://github.com/conao3/keg.
   nix run                           # Start Emacs with leaner-ts-mode loaded
   nix fmt                           # Format the Nix files
 #+end_src
+
+The development shell builds the pinned grammar and exports
+=LEANER_TS_GRAMMAR_DIR= for the editing tests. For development outside Nix,
+install the grammar with =leaner-ts-install-grammar= before running =make check=.
+Tests require a working grammar and exercise actual parsing, fontification,
+indentation, navigation, comments, project discovery, and typing a newline.
+
+Indentation scenarios include the cases exercised by
+[[https://github.com/Julian/lean.nvim/blob/main/spec/indent_spec.lua][lean.nvim's indent tests]]:
+=where= fields, nested =by=, focus dots, branches, multiline types, and explicit
+dedents. Lean's extensible syntax motivates the flat grammar; the grammar's
+own README describes the tradeoff.
 
 * License
 #+begin_example
