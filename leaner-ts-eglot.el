@@ -87,7 +87,7 @@
     server))
 
 (cl-defmethod leaner-ts-lsp-position ()
-  "Flush changes and return the current Eglot document position."
+  "Flush the document and return its current Eglot position."
   (leaner-ts-lsp-current)
   (eglot--signal-textDocument/didChange)
   (eglot--TextDocumentPositionParams))
