@@ -50,9 +50,5 @@ jobs:
       - name: Select the test toolchain
         run: elan default "$(cat test/fixtures/lsp/lean-toolchain)"
 
-      - name: Ensure Eglot 1.20 or newer for integration tests
-        run: |
-          keg exec emacs --batch --eval "(progn (require 'package) (require 'eglot) (unless (fboundp 'eglot-semantic-tokens-mode) (package-refresh-contents) (package-install (car (alist-get 'eglot package-archive-contents)))))"
-
       - name: Run checks
         run: make check

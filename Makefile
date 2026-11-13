@@ -32,12 +32,16 @@ test: build
 	keg exec $(EMACS) --batch -L . -l test/$(PACKAGE_NAME)-tests.el -l test/leaner-ts-features-tests.el -f cort-test-run
 
 .PHONY: integration
-integration: build
+integration: test-deps build
 	keg exec $(EMACS) --batch -L . -l test/$(PACKAGE_NAME)-tests.el -l test/leaner-ts-integration-tests.el -f cort-test-run
+
+.PHONY: test-deps
+test-deps:
+	keg exec $(EMACS) --batch -l test/setup-eglot.el
 
 .PHONY: check
 .NOTPARALLEL: check
-check: clean lint test integration
+check: clean test-deps lint test integration
 
 .PHONY: clean
 clean:
