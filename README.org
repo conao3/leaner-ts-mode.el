@@ -1,3 +1,5 @@
+#+author: conao3
+
 #+html: <p align="center"><img src="docs/assets/banner.png" alt="leaner-ts-mode: Lean 4 major mode for Emacs, powered by tree-sitter" width="880"></p>
 
 #+html: <p align="center"><strong>Lean 4 major mode for Emacs, powered by tree-sitter</strong></p>
@@ -6,8 +8,7 @@
 
 #+html: <p align="center"><a href="#install">Install</a> · <a href="#usage">Usage</a> · <a href="#writing-proofs">Writing proofs</a> · <a href="#customize">Customize</a> · <a href="#contribution">Contribution</a> · <a href="#license">License</a></p>
 
-#+title: leaner-ts-mode.el
-#+author: conao3
+#+html: <h1>leaner-ts-mode.el</h1>
 
 * Description
 Lean 4 editing with [[https://github.com/lua-vr/tree-sitter-lean-flat][tree-sitter-lean-flat]] and Emacs facilities.
