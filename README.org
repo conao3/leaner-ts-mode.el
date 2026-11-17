@@ -1,9 +1,13 @@
+#+html: <p align="center"><img src="docs/assets/banner.png" alt="leaner-ts-mode: Lean 4 major mode for Emacs, powered by tree-sitter" width="880"></p>
+
+#+html: <p align="center"><strong>Lean 4 major mode for Emacs, powered by tree-sitter</strong></p>
+
+#+html: <p align="center"><a href="https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml"><img src="https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI"></a> <a href="LICENSE"><img src="https://img.shields.io/github/license/conao3/leaner-ts-mode.el" alt="License: GPL-3.0"></a> <a href="leaner-ts-mode.el"><img src="https://img.shields.io/badge/Emacs-30.1%2B-7F5AB6" alt="Emacs 30.1+"></a> <a href="https://github.com/conao3/leaner-ts-mode.el/stargazers"><img src="https://img.shields.io/github/stars/conao3/leaner-ts-mode.el?style=flat" alt="GitHub stars"></a></p>
+
+#+html: <p align="center"><a href="#install">Install</a> · <a href="#usage">Usage</a> · <a href="#writing-proofs">Writing proofs</a> · <a href="#customize">Customize</a> · <a href="#contribution">Contribution</a> · <a href="#license">License</a></p>
+
 #+title: leaner-ts-mode.el
 #+author: conao3
-
-[[https://github.com/conao3/leaner-ts-mode.el/blob/master/LICENSE][https://img.shields.io/github/license/conao3/leaner-ts-mode.el.svg?style=flat-square]]
-[[https://github.com/conao3/leaner-ts-mode.el/releases][https://img.shields.io/github/tag/conao3/leaner-ts-mode.el.svg?style=flat-square]]
-[[https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml][https://github.com/conao3/leaner-ts-mode.el/actions/workflows/ci.yml/badge.svg]]
 
 * Description
 Lean 4 editing with [[https://github.com/lua-vr/tree-sitter-lean-flat][tree-sitter-lean-flat]] and Emacs facilities.
